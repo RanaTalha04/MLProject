@@ -7,6 +7,26 @@ from src.exception import CustomException
 from src.logger import logging
 
 
+def load_object(file_path):
+    """
+    Load a Python object from a file using pickle.
+
+    Args:
+        file_path (str): The path to the file from which the object should be loaded.
+
+    Returns:
+        The loaded Python object.
+    """
+    import pickle
+
+    try:
+        with open(file_path, "rb") as file_obj:
+            return pickle.load(file_obj)
+
+    except Exception as e:
+        raise CustomException(e, sys)
+
+
 def save_object(file_path, obj):
     """
     Save a Python object to a file using pickle.
@@ -35,12 +55,12 @@ def evaluate_models(X_train, y_train, X_test, y_test, models, params):
 
         for i in range(len(models)):
             model = list(models.values())[i]
-            param=params[list(models.keys())[i]]
+            param = params[list(models.keys())[i]]
 
             # Perform Grid Search CV
             gs = GridSearchCV(model, param, cv=5)
             gs.fit(X_train, y_train)
-            
+
             # Train the model
             model.set_params(**gs.best_params_)
             model.fit(X_train, y_train)
