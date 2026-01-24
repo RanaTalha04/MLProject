@@ -23,9 +23,11 @@ class StudentInput(BaseModel):
 def index():
     return {"message": "Student Performance Predictor API running"}
 
+
 @app.get("/health")
 def health_check():
     return {"status": "healthy"}
+
 
 @app.post("/predict")
 def predict(data: StudentInput):
