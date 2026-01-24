@@ -49,7 +49,7 @@ if st.button("Predict Performance"):
     }
 
     try:
-        res = requests.post("http://backend:8000/predict", json=payload)
+        res = requests.post("http://127.0.0.1:8000/predict", json=payload)
 
         if res.status_code == 200:
             st.success(f"Predicted Math Score: {res.json()['prediction']}")
